@@ -14,12 +14,12 @@
 ################################
 # These variables are overwritten by Zenoss when the ZenPack is exported
 # or saved.  Do not modify them directly here.
-NAME = 'ZenPacks.BlakeDrager.fping'
+NAME = 'ZenPacks.community.fping'
 VERSION = '1.0'
-AUTHOR = 'Blake Drager'
+AUTHOR = 'Steven Bambling'
 LICENSE = ''
-NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.BlakeDrager']
-PACKAGES = ['ZenPacks', 'ZenPacks.BlakeDrager', 'ZenPacks.BlakeDrager.fping']
+NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
+PACKAGES = ['ZenPacks', 'ZenPacks.community', 'ZenPacks.community.fping']
 INSTALL_REQUIRES = []
 COMPAT_ZENOSS_VERS = '>=2.2'
 PREV_ZENPACK_NAME = ''
