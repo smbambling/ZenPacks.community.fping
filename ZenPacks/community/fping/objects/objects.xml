@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <objects>
-<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'b_fping') -->
-<object id='/zport/dmd/Devices/rrdTemplates/b_fping' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<!-- ('', 'zport', 'dmd', 'Devices', 'rrdTemplates', 'Fping') -->
+<object id='/zport/dmd/Devices/rrdTemplates/Fping' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
+<property id='zendoc' type='string'>
+This template uses fping to retrieve detailed round-trip latency information as well as packet loss.
+</property>
 <property type="text" id="description" mode="w" >
 This template uses fping to retrieve detailed round-trip latency information as well as packet loss.
+</property>
+<property type="string" id="targetPythonClass" mode="w" >
+Products.ZenModel.Device
 </property>
 <tomanycont id='datasources'>
 <object id='fping' module='Products.ZenModel.BasicDataSource' class='BasicDataSource'>
@@ -20,13 +26,16 @@ True
 3
 </property>
 <property type="string" id="commandTemplate" mode="w" >
-/usr/sbin/fping -c 3 -sq  ${dev/manageIp} 2&gt;&amp;1 | /bin/sed 's/\([0-9]*\)\/\([0-9]*\)\/\([0-9]\)%/xmt=\1 rcv=\2 loss=\3/;s/\([0-9]*.[0-9]*\)\/\([0-9].*\)\/\([0-9].*\)/min=\1 avg=\2 max=\3/' | /bin/sed -r '/targets/,/real time/d;s/[0-9]*.[0-9]*.[0-9]*.[0-9]* : xmt\/rcv\/%loss = /PING OK|/;s/, min\/avg\/max = / /'
+check_fping ${dev/manageIp}
 </property>
 <property type="int" id="cycletime" mode="w" >
-300
+120
 </property>
 <property type="boolean" id="usessh" mode="w" >
 False
+</property>
+<property type="string" id="parser" mode="w" >
+Auto
 </property>
 <tomanycont id='datapoints'>
 <object id='avg' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
@@ -146,8 +155,14 @@ GPRINT:Round_Trip_Minimum-raw:MAX:max\:%5.2lf%s\j
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
 <tomanycont id='graphPoints'>
 <object id='Loss' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 DONTDRAW
 </property>
@@ -270,7 +285,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-Percent Loss 
+Percent Loss
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -284,10 +299,6 @@ False
 <property type="int" id="maxy" mode="w" >
 100
 </property>
-<property type="text" id="custom" mode="w" >
-
-
-</property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
 </property>
@@ -296,6 +307,9 @@ True
 </property>
 <tomanycont id='graphPoints'>
 <object id='loss' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
 <property type="string" id="color" mode="w" >
 EE0000
 </property>
@@ -358,7 +372,6 @@ VDEF:pingtotal=Pings_Sent-raw,TOTAL
 GPRINT:pingtotal:Total Sent      \:%10.0lf%s\j
 VDEF:rcvtotal=Pings_Received-raw,TOTAL
 GPRINT:rcvtotal:Total Received  \:%10.0lf%s
-
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -368,6 +381,9 @@ True
 </property>
 <tomanycont id='graphPoints'>
 <object id='Pings Received' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -455,7 +471,6 @@ AREA:maxdiff#33ff44bf:Max Difference    :STACK
 GPRINT:maxdiff:LAST:cur\:%5.2lf%s
 GPRINT:maxdiff:AVERAGE:avg\:%5.2lf%s
 GPRINT:maxdiff:MAX:max\:%5.2lf%s\j
-
 </property>
 <property type="boolean" id="hasSummary" mode="w" >
 True
@@ -465,6 +480,9 @@ True
 </property>
 <tomanycont id='graphPoints'>
 <object id='Round Trip Average' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
 <property type="string" id="color" mode="w" >
 006700
 </property>
